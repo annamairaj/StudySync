@@ -27,6 +27,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         dashboard.ui
         dashboard.h
         dashboard.cpp
+        welcomescreen.h welcomescreen.cpp welcomescreen.ui
 
     )
 # Define target properties for Android with Qt 6 as:

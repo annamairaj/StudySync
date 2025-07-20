@@ -2,6 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QStackedWidget>
+#include "welcomescreen.h"
+#include "dashboard.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -16,9 +20,12 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-private:
-    void handleLoginClicked();
+
 private:
     Ui::MainWindow *ui;
+
+    QStackedWidget *mainStack;
+    WelcomeScreen *welcomeScreen;
+    DashboardWindow *dashboard;
 };
 #endif // MAINWINDOW_H
