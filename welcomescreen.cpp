@@ -1,6 +1,13 @@
 #include "welcomescreen.h"
 #include "ui_welcomescreen.h"
 
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QSqlError>
+#include <QDebug>
+#include <QMessageBox>
+#include <QCryptographicHash>
+
 WelcomeScreen::WelcomeScreen(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::WelcomeScreen)
@@ -16,6 +23,9 @@ WelcomeScreen::WelcomeScreen(QWidget *parent)
     connect(ui->forgotButton, &QPushButton::clicked, this, &WelcomeScreen::forgotButton_clicked);
     connect(ui->forgotBackButton, &QPushButton::clicked, this, &WelcomeScreen::forgotBackButton_clicked);
     connect(ui->signupBackButton, &QPushButton::clicked, this, &WelcomeScreen::signupBackButton_clicked);
+
+    connect(ui->createAccountButton, &QPushButton::clicked, this, &WelcomeScreen::createAccountButton_clicked);
+
 }
 
 
@@ -26,7 +36,38 @@ WelcomeScreen::~WelcomeScreen()
 
 void WelcomeScreen::loginButton_clicked()
 {
-    emit loginSuccessful();
+
+    QString identifier = ui->loginUsernameOrEmailField->text();
+    QString password = ui->loginPasswordField->text();
+
+    if (identifier.isEmpty() || password.isEmpty()) {
+        QMessageBox::warning(this, "Login", "Please fill in all fields.");
+        return;
+    }
+
+    if (validateLogin(identifier, password)) {
+        //QMessageBox::information(this, "Login", "Login successful!");
+        emit loginSuccessful();
+    } else {
+        QMessageBox::warning(this, "Login", "Invalid username/email or password.");
+    }
+}
+
+void WelcomeScreen::createAccountButton_clicked()
+{
+
+    QString username = ui->signupUsernameField->text();
+    QString email = ui->signupEmailField->text();
+    QString password = ui->signupPasswordField->text();
+
+        if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            QMessageBox::warning(this, "Signup", "Please fill in all fields.");
+            return;
+        }
+
+        if (registerNewUser(username, email, password)) {
+            ui->stackedWidget->setCurrentIndex(0); // back to login
+        }
 }
 
 void WelcomeScreen::signupButton_clicked()
@@ -47,4 +88,47 @@ void WelcomeScreen::forgotBackButton_clicked()
 void WelcomeScreen::signupBackButton_clicked()
 {
     ui->stackedWidget->setCurrentIndex(0); // Back to home
+}
+
+// ===== DATABASE =====
+bool WelcomeScreen::registerNewUser(const QString &username, const QString &email, const QString &password)
+{
+    QString hash = QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha256).toHex();
+
+    QSqlQuery query;
+    query.prepare("INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)");
+    query.addBindValue(username);
+    query.addBindValue(email);
+    query.addBindValue(hash);
+
+    if (query.exec()) {
+        QMessageBox::information(this, "Signup", "User registered successfully!");
+        return true;
+    } else {
+        QMessageBox::warning(this, "Signup", "Signup failed: " + query.lastError().text());
+        qDebug() << "Signup error:" << query.lastError().text();
+        return false;
+    }
+}
+
+
+bool WelcomeScreen::validateLogin(const QString &identifier, const QString &password)
+{
+    QString hash = QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha256).toHex();
+
+    QSqlQuery query;
+    query.prepare(R"(
+        SELECT id FROM users
+        WHERE (username = ? OR email = ?) AND password_hash = ?
+    )");
+    query.addBindValue(identifier);
+    query.addBindValue(identifier);  // email and username are treated same
+    query.addBindValue(hash);
+
+    if (query.exec() && query.next()) {
+        return true;
+    } else {
+        qDebug() << "Login failed:" << query.lastError().text();
+        return false;
+    }
 }

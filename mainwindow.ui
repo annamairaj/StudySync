@@ -15,7 +15,7 @@
   </property>
   <property name="styleSheet">
    <string notr="true">* {
-	background-color: rgb(217, 217, 217)
+	background-color: rgb(17, 25, 34)
 }
 
 QLineEdit {

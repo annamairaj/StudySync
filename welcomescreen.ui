@@ -10,14 +10,85 @@
     <height>900</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">
+* {
+	background-color: rgb(17, 25, 34)
+}
+
+QWidget#WindowScreen {
+    background-color: rgb(17, 25, 34);
+    border: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+QLineEdit {
+    border: 1px solid #afafaf;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #2c3e50;
+    height: 32px;
+}
+
+#loginButton {
+	background-color: rgb(233, 92, 105); 
+	border-radius: 10px;
+	color: white;
+	height: 32px;
+}
+
+#forgotButton {
+	background-color: rgb(24, 24, 24); 
+	border-radius: 10px;
+	color: white;
+	height: 32px;
+	border: 1px solid #afafaf;
+}
+
+#signupButton {
+	background-color: rgb(34, 40, 87); 
+	border-radius: 10px;
+	color: white;
+	height: 32px;
+	border: 1px solid #afafaf;
+}
+
+
+#createAccountButton {
+	background-color: rgb(233, 92, 105); 
+	border-radius: 10px;
+	color: white;
+	height: 32px;
+}
+
+#resetAccountButton {
+	background-color: rgb(24, 24, 24); 
+	border-radius: 10px;
+	color: white;
+	height: 32px;
+	border: 1px solid #afafaf;
+}
+
+#studSyncMainTitle {
+	font-weight: bold;
+	font-size: 50;
+}</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="mainPage">
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -58,21 +129,24 @@
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
-            <widget class="QLabel" name="StudySync">
+            <widget class="QLabel" name="studSyncMainTitle">
              <property name="text">
-              <string>StudySync</string>
+              <string>STUDYSYNC</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignCenter</set>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="emailLineEdit">
+            <widget class="QLineEdit" name="loginUsernameOrEmailField">
              <property name="placeholderText">
               <string>Username or Email</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="passwordLineEdit">
+            <widget class="QLineEdit" name="loginPasswordField">
              <property name="echoMode">
               <enum>QLineEdit::EchoMode::Password</enum>
              </property>
@@ -340,21 +414,24 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_5">
+            <widget class="QLineEdit" name="signupUsernameField">
              <property name="placeholderText">
               <string>Username</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_4">
+            <widget class="QLineEdit" name="signupEmailField">
              <property name="placeholderText">
               <string>Email</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_6">
+            <widget class="QLineEdit" name="signupPasswordField">
+             <property name="echoMode">
+              <enum>QLineEdit::EchoMode::Password</enum>
+             </property>
              <property name="placeholderText">
               <string>Password</string>
              </property>

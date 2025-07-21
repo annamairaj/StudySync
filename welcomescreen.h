@@ -24,6 +24,12 @@ private slots:
     void forgotButton_clicked();
     void forgotBackButton_clicked();
     void signupBackButton_clicked();
+    void createAccountButton_clicked();
+
+private:
+    bool registerNewUser(const QString &username, const QString &email, const QString &password);
+    bool validateLogin(const QString &identifier, const QString &password);
+
 
 
 private:

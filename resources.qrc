@@ -1,5 +1,6 @@
 <RCC>
-    <qresource prefix="/images/logoImage">
-        <file>StudySyncLogoImage.png</file>
+    <qresource prefix="/logo/sslogowhite">
+        <file>sslogowhite.png</file>
     </qresource>
+    <qresource prefix="/new/prefix1"/>
 </RCC>

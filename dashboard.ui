@@ -10,6 +10,72 @@
     <height>900</height>
    </rect>
   </property>
+  <property name="styleSheet">
+   <string notr="true">#sidebarFrame {
+ border-radius: 10px;
+ border: 1px solid #000000;
+}
+
+#topbarFrame {
+	background-color: none;
+	border: none;
+}
+
+#dashboardButton {
+    background-color: #ffffff;
+	border-radius: 10px;
+	color: black;
+	height: 32px;
+	width: 120
+}
+#subjectsButton {
+    background-color: #ffffff;
+	border-radius: 10px;
+	color: black;
+	height: 32px;
+	width: 120
+}
+#certificatesButton {
+    background-color: #ffffff;
+	border-radius: 10px;
+	color: black;
+	height: 32px;
+	width: 120
+}
+
+#dashboardLogoutButton {
+	background-color: rgb(59, 17, 36);
+	border-radius: 10px;
+	color: white;
+	height: 32px;
+	width: 120
+}
+
+#searchLineEdit {
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+    color: #000000;
+    height: 32px;
+	padding-left: 10px;
+}
+
+#addButton {
+	background-color: #ffffff;
+	border-radius: 10px;
+	color: black;
+     font-weight: bold;
+}
+
+#contentFrame {
+ border-radius: 10px;
+ border: 1px solid #000000;
+}
+
+#appTitle {
+ font-weight: bold;
+}
+</string>
+  </property>
   <layout class="QHBoxLayout" name="mainLayout">
    <item>
     <widget class="QFrame" name="sidebarFrame">
@@ -20,7 +86,7 @@
       <item>
        <widget class="QLabel" name="appTitle">
         <property name="text">
-         <string>StudySync</string>
+         <string>STUDYSYNC</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -64,6 +130,13 @@
         </property>
        </spacer>
       </item>
+      <item>
+       <widget class="QPushButton" name="dashboardLogoutButton">
+        <property name="text">
+         <string>Logout</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -73,50 +146,128 @@
       <enum>QFrame::Shape::StyledPanel</enum>
      </property>
      <layout class="QVBoxLayout" name="contentLayout">
+      <property name="topMargin">
+       <number>12</number>
+      </property>
       <item>
-       <widget class="QLabel" name="subjectLabel">
-        <property name="font">
-         <font>
-          <pointsize>12</pointsize>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Current Subject: Mathematics</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignmentFlag::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLCDNumber" name="studyTimer">
-        <property name="digitCount">
-         <number>8</number>
-        </property>
-        <property name="segmentStyle">
-         <enum>QLCDNumber::SegmentStyle::Flat</enum>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QProgressBar" name="progressBar">
-        <property name="value">
-         <number>40</number>
-        </property>
-        <property name="format">
-         <string>%p% Complete</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="downloadCertificateButton">
+       <widget class="QFrame" name="topbarFrame">
         <property name="enabled">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
-        <property name="text">
-         <string>Download Certificate</string>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>10</height>
+         </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Shape::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Shadow::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QLineEdit" name="searchLineEdit">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>300</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="placeholderText">
+            <string>Search</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Policy::Expanding</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="addButton">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>50</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>+</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QStackedWidget" name="homeStackedWidget">
+        <property name="currentIndex">
+         <number>1</number>
+        </property>
+        <widget class="QWidget" name="dashboardPageStack">
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <widget class="QLabel" name="dashboardPageLabel">
+            <property name="text">
+             <string>DASHBOARD PAGE</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="subjectsPageStack">
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QLabel" name="subjectsPageLabel">
+            <property name="text">
+             <string>SUBJECTS PAGE</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="certsPageStack">
+         <layout class="QVBoxLayout" name="verticalLayout_5">
+          <item>
+           <widget class="QLabel" name="certPageLabel">
+            <property name="text">
+             <string>CERTIFICATES PAGE</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </widget>
       </item>
      </layout>
