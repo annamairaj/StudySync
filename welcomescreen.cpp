@@ -1,18 +1,26 @@
 #include "welcomescreen.h"
 #include "ui_welcomescreen.h"
-
+#include <QRegularExpression>
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QDebug>
 #include <QMessageBox>
 #include <QCryptographicHash>
+#include <QSettings>
+
+bool WelcomeScreen::isValidEmail(const QString &email) {
+    static const QRegularExpression regex(R"((^[^\s@]+@[^\s@]+\.[^\s@]+$))");
+    return regex.match(email).hasMatch();
+}
 
 WelcomeScreen::WelcomeScreen(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::WelcomeScreen)
 {
     ui->setupUi(this);
+
+    ui->rememberMeCheckbox->setStyleSheet("QCheckBox { color: white; }"); //makes checkbox text visible
 
     // Start on home page (page 0)
     ui->stackedWidget->setCurrentIndex(0);
@@ -23,7 +31,6 @@ WelcomeScreen::WelcomeScreen(QWidget *parent)
     connect(ui->forgotButton, &QPushButton::clicked, this, &WelcomeScreen::forgotButton_clicked);
     connect(ui->forgotBackButton, &QPushButton::clicked, this, &WelcomeScreen::forgotBackButton_clicked);
     connect(ui->signupBackButton, &QPushButton::clicked, this, &WelcomeScreen::signupBackButton_clicked);
-
     connect(ui->createAccountButton, &QPushButton::clicked, this, &WelcomeScreen::createAccountButton_clicked);
 
 }
@@ -38,6 +45,7 @@ void WelcomeScreen::loginButton_clicked()
 {
 
     QString identifier = ui->loginUsernameOrEmailField->text();
+    QString email = ui->signupEmailField->text();
     QString password = ui->loginPasswordField->text();
 
     if (identifier.isEmpty() || password.isEmpty()) {
@@ -45,7 +53,20 @@ void WelcomeScreen::loginButton_clicked()
         return;
     }
 
+    // check to see if identifier looks like an email & validate it
+    if (identifier.contains('@') && !isValidEmail(identifier)) {
+        QMessageBox::warning(this, "Login", "Please enter a valid email address.");
+        return;
+    }
+
     if (validateLogin(identifier, password)) {
+        //Remember me logic
+        QSettings settings("Group 4", "StudySync");
+        if (ui->rememberMeCheckbox->isChecked()){
+            settings.setValue("remembered_user", identifier);
+        } else {
+            settings.remove("remembered_user");
+        }
         //QMessageBox::information(this, "Login", "Login successful!");
         emit loginSuccessful();
     } else {
@@ -65,8 +86,23 @@ void WelcomeScreen::createAccountButton_clicked()
             return;
         }
 
+        // Validate email format
+        if (!isValidEmail(email)) {
+            QMessageBox::warning(this, "Signup", "Please enter a valid email address.");
+            return;
+        }
+
+        //Matching pw check
+        QString confirmPassword = ui->signupPasswordField->text();
+        if (password != confirmPassword) {
+            QMessageBox::warning(this, "Signup", "Passwords do not match.");
+            return;
+        }
+
         if (registerNewUser(username, email, password)) {
             ui->stackedWidget->setCurrentIndex(0); // back to login
+            QMessageBox::information(this, "Signup", "Account created! Please login.");
+
         }
 }
 

@@ -29,7 +29,7 @@ private slots:
 private:
     bool registerNewUser(const QString &username, const QString &email, const QString &password);
     bool validateLogin(const QString &identifier, const QString &password);
-
+    bool isValidEmail (const QString &email);
 
 
 private:

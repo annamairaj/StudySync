@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>WelcomeScreen</class>
  <widget class="QWidget" name="WelcomeScreen">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -130,6 +133,9 @@ QLineEdit {
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
             <widget class="QLabel" name="studSyncMainTitle">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="text">
               <string>STUDYSYNC</string>
              </property>
@@ -166,6 +172,16 @@ QLineEdit {
             <widget class="Line" name="line_2">
              <property name="orientation">
               <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="rememberMeCheckbox">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="text">
+              <string>Remember Me</string>
              </property>
             </widget>
            </item>
