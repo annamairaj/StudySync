@@ -8,6 +8,7 @@
 #include <QMessageBox>
 #include <QCryptographicHash>
 #include <QSettings>
+#include <QGraphicsDropShadowEffect>
 
 bool WelcomeScreen::isValidEmail(const QString &email) {
     static const QRegularExpression regex(R"((^[^\s@]+@[^\s@]+\.[^\s@]+$))");
@@ -19,6 +20,13 @@ WelcomeScreen::WelcomeScreen(QWidget *parent)
     , ui(new Ui::WelcomeScreen)
 {
     ui->setupUi(this);
+
+    // Glow effect for "Study Sync" label
+    QGraphicsDropShadowEffect *glow = new QGraphicsDropShadowEffect(this);
+    glow->setBlurRadius(25);
+    glow->setOffset(0); // Uniform glow
+    glow->setColor(QColor(139, 0, 0)); // Deep red glow
+    ui->studSyncMainTitle->setGraphicsEffect(glow);
 
     ui->rememberMeCheckbox->setStyleSheet("QCheckBox { color: white; }"); //makes checkbox text visible
 
@@ -81,29 +89,29 @@ void WelcomeScreen::createAccountButton_clicked()
     QString email = ui->signupEmailField->text();
     QString password = ui->signupPasswordField->text();
 
-        if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
-            QMessageBox::warning(this, "Signup", "Please fill in all fields.");
-            return;
-        }
+    if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
+        QMessageBox::warning(this, "Signup", "Please fill in all fields.");
+        return;
+    }
 
-        // Validate email format
-        if (!isValidEmail(email)) {
-            QMessageBox::warning(this, "Signup", "Please enter a valid email address.");
-            return;
-        }
+    // Validate email format
+    if (!isValidEmail(email)) {
+        QMessageBox::warning(this, "Signup", "Please enter a valid email address.");
+        return;
+    }
 
-        //Matching pw check
-        QString confirmPassword = ui->signupPasswordField->text();
-        if (password != confirmPassword) {
-            QMessageBox::warning(this, "Signup", "Passwords do not match.");
-            return;
-        }
+    //Matching pw check
+    QString confirmPassword = ui->signupPasswordField->text();
+    if (password != confirmPassword) {
+        QMessageBox::warning(this, "Signup", "Passwords do not match.");
+        return;
+    }
 
-        if (registerNewUser(username, email, password)) {
-            ui->stackedWidget->setCurrentIndex(0); // back to login
-            QMessageBox::information(this, "Signup", "Account created! Please login.");
+    if (registerNewUser(username, email, password)) {
+        ui->stackedWidget->setCurrentIndex(0); // back to login
+        QMessageBox::information(this, "Signup", "Account created! Please login.");
 
-        }
+    }
 }
 
 void WelcomeScreen::signupButton_clicked()

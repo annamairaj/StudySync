@@ -136,6 +136,22 @@ QLineEdit {
              <property name="enabled">
               <bool>false</bool>
              </property>
+             <property name="styleSheet">
+              <string notr="true">#studSyncMainTitle {
+    color: qlineargradient(
+        spread:pad, x1:0, y1:0, x2:1, y2:0,
+        stop:0 #ff4e50, stop:1 #8b0000
+    );
+    font-size: 28px;
+    font-weight: bold;
+    font-family: &quot;Courier New&quot;, &quot;Consolas&quot;, &quot;Monospace&quot;;
+    letter-spacing: 2px;
+    padding: 10px;
+    border: none;
+}
+
+</string>
+             </property>
              <property name="text">
               <string>STUDYSYNC</string>
              </property>

@@ -2,7 +2,7 @@
 #include "dashboard.h"
 #include "welcomescreen.h"
 #include <QApplication>
-#include "DatabaseManager.h"
+#include "databasemanager.h"
 
 int main(int argc, char *argv[])
 {
@@ -11,7 +11,6 @@ int main(int argc, char *argv[])
     if (!DatabaseManager::initialize()) {
         return 1;
     }
-
 
     MainWindow w;
     w.show();
