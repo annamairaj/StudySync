@@ -39,6 +39,16 @@ bool DatabaseManager::initialize() {
         )
     )");
 
+    query.exec(R"(
+    CREATE TABLE IF NOT EXISTS cards (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER,
+        question TEXT NOT NULL,
+        answer TEXT NOT NULL,
+        FOREIGN KEY(user_id) REFERENCES users(id)
+    )
+    )");
+
 
     qDebug() << "Database full path:" << path;
 

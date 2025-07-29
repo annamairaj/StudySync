@@ -29,6 +29,10 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         dashboard.cpp
         welcomescreen.h welcomescreen.cpp welcomescreen.ui
         databasemanager.h databasemanager.cpp
+        addcarddialog.h addcarddialog.cpp addcarddialog.ui
+
+
+
 
 
 
