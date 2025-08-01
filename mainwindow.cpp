@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
     //ui->setupUi(this);
     // Makes the UI custom size and color
     resize(1000, 900);
-    setStyleSheet("QMainWindow { border: none; background-color: rgb(17, 25, 34); }");
+    setStyleSheet("QMainWindow { border: none; background-color: rgb(44, 48, 76); }");
 
     // Create the stack to hold main pages
     mainStack = new QStackedWidget(this);

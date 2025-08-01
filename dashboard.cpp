@@ -68,27 +68,6 @@ void DashboardWindow::dashboardLogoutButton_clicked(){
     emit logoutSuccessful();       // Notify mainwindow.cpp
 }
 
-// void DashboardWindow::addCardButton_clicked()
-// {
-//     AddCardDialog dialog(this);
-//     if (dialog.exec() == QDialog::Accepted) {
-//         QString question = dialog.getQuestion();
-//         QString answer = dialog.getAnswer();
-//         addCardToList(question, answer);
-//     }
-// }
-
-// void DashboardWindow::addCardToList(const QString &question, const QString &answer)
-// {
-//     QPushButton *cardButton = new QPushButton(question);
-//     cardButton->setCheckable(true);  // allows toggle
-
-//     connect(cardButton, &QPushButton::toggled, this, [=](bool checked) {
-//         cardButton->setText(checked ? answer : question);
-//     });
-
-//     ui->cardLayout->addWidget(cardButton);
-// }
 
 
 void DashboardWindow::addCardButton_clicked()
@@ -112,20 +91,52 @@ void DashboardWindow::addCardToList(const QString &question, const QString &answ
 
     QPushButton *qaButton = new QPushButton(question);
     qaButton->setCheckable(true);
+
+        qaButton->setStyleSheet(R"(
+        QPushButton {
+            background-color: white;
+            color: black;
+            height: 50px;
+            font-size: 16px;
+            border-radius: 6px;
+        }
+        QPushButton:hover {
+            background-color: #f0f0f0;
+        }
+        QPushButton:checked {
+            background-color: #e0e0e0;
+        }
+    )");
+
     connect(qaButton, &QPushButton::toggled, this, [=](bool checked) {
         qaButton->setText(checked ? answer : question);
     });
 
     QPushButton *deleteButton = new QPushButton("Delete");
-    deleteButton->setStyleSheet("QPushButton { color: red; }");
+    // deleteButton->setStyleSheet("QPushButton { color: red; }");
+    deleteButton->setStyleSheet(R"(
+        QPushButton {
+            background-color: rgb(238, 104, 115);
+            color: white;
+            font-weight: bold;
+            height: 50px;
+            padding: 0 20px;
+            border-radius: 6px;
+        }
+        QPushButton:hover {
+            background-color: #a80000;
+        }
+    )");
+
+
     connect(deleteButton, &QPushButton::clicked, this, [=]() {
         deleteCardFromDatabase(cardId);
         ui->cardLayout->removeWidget(cardWidget);
         cardWidget->deleteLater();
     });
 
-    layout->addWidget(qaButton);
-    layout->addWidget(deleteButton);
+    layout->addWidget(qaButton, 4);
+    layout->addWidget(deleteButton, 1);
     ui->cardLayout->addWidget(cardWidget);
 }
 

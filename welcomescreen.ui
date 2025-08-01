@@ -25,7 +25,7 @@
   <property name="styleSheet">
    <string notr="true">
 * {
-	background-color: rgb(17, 25, 34)
+	background-color: none;
 }
 
 QWidget#WindowScreen {
@@ -36,34 +36,35 @@ QWidget#WindowScreen {
 }
 
 QLineEdit {
-    border: 1px solid #afafaf;
     border-radius: 8px;
     background-color: #ffffff;
     color: #2c3e50;
-    height: 32px;
+    height: 40px;
+	border: 1px solid #000000;
 }
 
 #loginButton {
-	background-color: rgb(233, 92, 105); 
+	background-color: rgb(106, 85, 115); 
 	border-radius: 10px;
 	color: white;
-	height: 32px;
+	height:  40px;
+	border: 1px solid #000000;
 }
 
 #forgotButton {
 	background-color: rgb(24, 24, 24); 
 	border-radius: 10px;
 	color: white;
-	height: 32px;
-	border: 1px solid #afafaf;
+	height:  40px;
+	border: 1px solid #000000;
 }
 
 #signupButton {
-	background-color: rgb(34, 40, 87); 
+	background-color: rgb(74, 84, 119); 
 	border-radius: 10px;
 	color: white;
-	height: 32px;
-	border: 1px solid #afafaf;
+	height:  40px;
+	border: 1px solid #000000;
 }
 
 
@@ -71,15 +72,15 @@ QLineEdit {
 	background-color: rgb(233, 92, 105); 
 	border-radius: 10px;
 	color: white;
-	height: 32px;
+	height:  40px;
 }
 
 #resetAccountButton {
 	background-color: rgb(24, 24, 24); 
 	border-radius: 10px;
 	color: white;
-	height: 32px;
-	border: 1px solid #afafaf;
+	height:  40px;
+	border: 1px solid #000000;
 }
 
 #studSyncMainTitle {

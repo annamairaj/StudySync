@@ -30,13 +30,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         welcomescreen.h welcomescreen.cpp welcomescreen.ui
         databasemanager.h databasemanager.cpp
         addcarddialog.h addcarddialog.cpp addcarddialog.ui
-
-
-
-
-
-
     )
+
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET StudySync APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
 #                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
