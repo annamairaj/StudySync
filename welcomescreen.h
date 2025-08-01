@@ -10,6 +10,7 @@ class WelcomeScreen;
 class WelcomeScreen : public QWidget
 {
     Q_OBJECT
+    friend class StudySyncTests;
 
 public:
     explicit WelcomeScreen(QWidget *parent = nullptr);

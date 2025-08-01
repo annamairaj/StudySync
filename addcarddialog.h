@@ -10,6 +10,7 @@ class AddCardDialog;
 class AddCardDialog : public QDialog
 {
     Q_OBJECT
+    friend class StudySyncTests;
 
 public:
     explicit AddCardDialog(QWidget *parent = nullptr);

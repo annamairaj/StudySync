@@ -20,6 +20,7 @@ struct Card {
 class DashboardWindow : public QWidget
 {
     Q_OBJECT
+    friend class StudySyncTests;
 
 public:
     explicit DashboardWindow(QWidget *parent = nullptr);
