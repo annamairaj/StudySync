@@ -34,8 +34,11 @@ private slots:
     void subjectsButton_clicked();
     void certificatesButton_clicked();
     void dashboardLogoutButton_clicked();
-
     void addCardButton_clicked();
+    void goToProductivityPage();
+    void updateProgress();
+    void subjectSelector_changed(const QString &subject);
+
 
 private:
     Ui::StudentDashboard *ui;

@@ -92,7 +92,7 @@ QLineEdit {
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="mainPage">
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -136,6 +136,18 @@ QLineEdit {
             <widget class="QLabel" name="studSyncMainTitle">
              <property name="enabled">
               <bool>false</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLabel#studSyncMainTitle {
+   color: #5e35b1;
+   text-shadow: 0 0 8px #3498db;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    font-size: 25px;
+    text-align: center;
+}
+
+</string>
              </property>
              <property name="text">
               <string>STUDYSYNC</string>

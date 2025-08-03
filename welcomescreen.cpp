@@ -9,6 +9,7 @@
 #include <QCryptographicHash>
 #include <QSettings>
 
+
 bool WelcomeScreen::isValidEmail(const QString &email) {
     static const QRegularExpression regex(R"((^[^\s@]+@[^\s@]+\.[^\s@]+$))");
     return regex.match(email).hasMatch();

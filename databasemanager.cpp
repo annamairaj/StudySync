@@ -48,7 +48,17 @@ bool DatabaseManager::initialize() {
         FOREIGN KEY(user_id) REFERENCES users(id)
     )
     )");
-
+    query.exec(R"(
+    CREATE TABLE IF NOT EXISTS progress (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER,
+        subject TEXT NOT NULL,
+        progress INTEGER NOT NULL,
+        notes TEXT,
+        date TEXT,
+        FOREIGN KEY(user_id) REFERENCES users(id)
+    )
+    )");
 
     qDebug() << "Database full path:" << path;
 

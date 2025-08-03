@@ -1,22 +1,14 @@
-// #include "dashboard.h"
-// #include "ui_dashboard.h"
-
-// #include "addcarddialog.h"
-// #include <QScrollArea>
-// #include <QVBoxLayout>
-// #include <QPushButton>
-// #include <QLabel>
-
-
 #include "dashboard.h"
 #include "ui_dashboard.h"
 #include "addcarddialog.h"
+#include "databasemanager.h"
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QDebug>
 #include <QVBoxLayout>
 #include <QPushButton>
 #include <QHBoxLayout>
+#include <QPropertyAnimation>
 
 DashboardWindow::DashboardWindow(QWidget *parent)
     : QWidget(parent),
@@ -24,6 +16,8 @@ DashboardWindow::DashboardWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    QStringList subjects = {"Math", "Science", "History", "Literature"};
+    ui->subjectSelector->addItems(subjects); //subject selector
 
     // This makes the the dashabord the first page when the user signs in
     ui->homeStackedWidget->setCurrentIndex(0);
@@ -33,8 +27,15 @@ DashboardWindow::DashboardWindow(QWidget *parent)
     connect(ui->subjectsButton, &QPushButton::clicked, this, &DashboardWindow::subjectsButton_clicked);
     connect(ui->certificatesButton, &QPushButton::clicked, this, &DashboardWindow::certificatesButton_clicked);
     connect(ui->dashboardLogoutButton, &QPushButton::clicked, this, &DashboardWindow::dashboardLogoutButton_clicked);
-
+    connect(ui->updateProgressButton, &QPushButton::clicked, this, &DashboardWindow::updateProgress);
+    connect(ui->subjectSelector, &QComboBox::currentTextChanged, this, &DashboardWindow::subjectSelector_changed);
     connect(ui->addCardButton, &QPushButton::clicked, this, &DashboardWindow::addCardButton_clicked);
+    connect(ui->productivityTrackerButton, &QPushButton::clicked, this, &DashboardWindow::goToProductivityPage);
+
+    if (!subjects.isEmpty()) {
+        subjectSelector_changed(subjects.first());
+    }
+
 
     // Load existing cards from DB
     QList<Card> cards = loadAllCards();
@@ -54,19 +55,103 @@ void DashboardWindow::dashboardButton_clicked(){
 
 }
 
-void DashboardWindow::subjectsButton_clicked(){
+void DashboardWindow::goToProductivityPage() {
     ui->homeStackedWidget->setCurrentIndex(1);
-
 }
 
-void DashboardWindow::certificatesButton_clicked(){
+void DashboardWindow::subjectsButton_clicked(){
     ui->homeStackedWidget->setCurrentIndex(2);
 
 }
 
+void DashboardWindow::certificatesButton_clicked(){
+    ui->homeStackedWidget->setCurrentIndex(3);
+
+}
+
+
 void DashboardWindow::dashboardLogoutButton_clicked(){
     emit logoutSuccessful();       // Notify mainwindow.cpp
 }
+void DashboardWindow::subjectSelector_changed(const QString &subject)
+{
+    qDebug() << "Subject changed to:" << subject;
+
+    int userId = 1; // TODO: replace with actual logged-in user ID
+
+    QSqlQuery query;
+    query.prepare(R"(
+        SELECT progress, notes, date FROM progress
+        WHERE user_id = ? AND subject = ?
+        ORDER BY date DESC
+        LIMIT 1
+    )");
+    query.addBindValue(userId);
+    query.addBindValue(subject);
+
+    if (query.exec() && query.next()) {
+        int progressValue = query.value(0).toInt();
+        QString notes = query.value(1).toString();
+        QString dateStr = query.value(2).toString();
+        QDate date = QDate::fromString(dateStr, Qt::ISODate);
+
+        ui->prodProgressBar->setValue(progressValue);
+        ui->notesEdit->setText(notes);
+        ui->datePicker->setDate(date);
+
+        qDebug() << "Loaded progress for" << subject << ":" << progressValue;
+    } else {
+        // No progress saved yet for this subject — reset UI
+        ui->prodProgressBar->setValue(0);
+        ui->notesEdit->clear();
+        ui->datePicker->setDate(QDate::currentDate());
+
+        qDebug() << "No progress found for" << subject;
+    }
+}
+
+
+void DashboardWindow::updateProgress()
+{
+    QString subject = ui->subjectSelector->currentText();
+    QString notes = ui->notesEdit->text();
+    QDate date = ui->datePicker->date();
+
+    // For now, let's simulate a new progress value by increasing the existing value
+    int oldValue = ui->prodProgressBar->value();
+    int newValue = qMin(oldValue + 10, 100); // example: increase by 10 each time
+
+    // Save to DB
+    QSqlQuery query;
+    query.prepare(R"(
+        INSERT INTO progress (user_id, subject, progress, notes, date)
+        VALUES (?, ?, ?, ?, ?)
+    )");
+
+    query.addBindValue(1); // Replace with actual user ID
+    query.addBindValue(subject);
+    query.addBindValue(newValue);
+    query.addBindValue(notes);
+    query.addBindValue(date.toString(Qt::ISODate));
+
+    if (!query.exec()) {
+        qDebug() << "Failed to save progress:" << query.lastError();
+        ui->productivityPageLabel->setText("Failed to save progress.");
+    } else {
+        ui->productivityPageLabel->setText(QString("Progress saved for %1").arg(subject));
+
+        // Animate from oldValue to newValue
+        QPropertyAnimation *animation = new QPropertyAnimation(ui->prodProgressBar, "value");
+        animation->setDuration(600);
+        animation->setStartValue(oldValue);
+        animation->setEndValue(newValue);
+        animation->start(QAbstractAnimation::DeleteWhenStopped);
+
+        // Actually update the value (so it's stored for future logic)
+        ui->prodProgressBar->setValue(newValue);
+    }
+}
+
 
 
 
