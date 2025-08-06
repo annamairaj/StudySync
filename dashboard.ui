@@ -156,13 +156,6 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="subjectsButton">
-        <property name="text">
-         <string>Subjects</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QPushButton" name="certificatesButton">
         <property name="text">
          <string>Certificates</string>
@@ -184,6 +177,13 @@
         </property>
         <property name="text">
          <string>Productivity Tracker</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="subjectsButton">
+        <property name="text">
+         <string>Study Journal</string>
         </property>
        </widget>
       </item>
@@ -286,6 +286,15 @@
       </item>
       <item>
        <widget class="QStackedWidget" name="homeStackedWidget">
+        <property name="styleSheet">
+         <string notr="true">#certificateLabel {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: rgb(74, 84, 117);
+}
+</string>
+        </property>
         <property name="currentIndex">
          <number>1</number>
         </property>
@@ -331,8 +340,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>140</width>
-               <height>140</height>
+               <width>740</width>
+               <height>674</height>
               </rect>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -349,8 +358,8 @@
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>98</width>
-                      <height>52</height>
+                      <width>672</width>
+                      <height>606</height>
                      </rect>
                     </property>
                     <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -545,9 +554,41 @@
         <widget class="QWidget" name="subjectsPageStack">
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
-           <widget class="QLabel" name="subjectsPageLabel">
+           <widget class="QLabel" name="subjectsLabel">
+            <property name="styleSheet">
+             <string notr="true">#subjectsLabel {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: rgb(74, 84, 117);
+}
+</string>
+            </property>
             <property name="text">
-             <string>SUBJECTS PAGE</string>
+             <string>Journal Entries by Subject</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QListWidget" name="pastStudySessionNotes">
+            <property name="styleSheet">
+             <string notr="true">#pastStudySessionNotes {
+    background-color: rgb(242, 238, 235);
+    border-radius: 10px;
+    border: 1px solid #000000;
+    padding: 10px;
+    font-size: 14px;
+    color: black;
+}
+QListWidget::item {
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+}
+QListWidget::item:selected {
+    background-color: rgb(106, 85, 115);
+    color: white;
+}
+</string>
             </property>
            </widget>
           </item>
@@ -556,9 +597,32 @@
         <widget class="QWidget" name="certsPageStack">
          <layout class="QVBoxLayout" name="verticalLayout_5">
           <item>
-           <widget class="QLabel" name="certPageLabel">
+           <widget class="QLabel" name="certificateLabel">
             <property name="text">
-             <string>CERTIFICATES PAGE</string>
+             <string>Your Certificates</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QListWidget" name="certListWidget">
+            <property name="styleSheet">
+             <string notr="true">#certListWidget {
+    background-color: rgb(242, 238, 235);
+    border-radius: 10px;
+    border: 1px solid #000000;
+    padding: 10px;
+    font-size: 14px;
+    color: black;
+}
+QListWidget::item {
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+}
+QListWidget::item:selected {
+    background-color: rgb(106, 85, 115);
+    color: white;
+}
+</string>
             </property>
            </widget>
           </item>

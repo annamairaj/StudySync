@@ -2,7 +2,7 @@
 #include "dashboard.h"
 #include "welcomescreen.h"
 #include <QApplication>
-#include "DatabaseManager.h"
+#include "databaseManager.h"
 
 int main(int argc, char *argv[])
 {

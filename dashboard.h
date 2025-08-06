@@ -42,13 +42,15 @@ private slots:
 
 private:
     Ui::StudentDashboard *ui;
+
     //void addCardToList(const QString &question, const QString &answer);
-
-
     void addCardToList(const QString &question, const QString &answer, int cardId);
     int saveCardToDatabase(const QString &question, const QString &answer);
     void deleteCardFromDatabase(int cardId);
     QList<Card> loadAllCards();
+    void updateNotesSection();               // Organizes and displays notes by subject and date
+    void updateCertificatesPage();           // Populates cert list when a subject is "mastered"
+
 };
 
 #endif // DASHBOARDWINDOW_H

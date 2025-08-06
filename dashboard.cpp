@@ -9,6 +9,14 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QPropertyAnimation>
+#include <QMessageBox>
+#include <QDate>
+#include <QScrollArea>
+#include <QScrollBar>
+#include <QGroupBox>
+#include <QLabel>
+#include <QMessageBox>
+
 
 DashboardWindow::DashboardWindow(QWidget *parent)
     : QWidget(parent),
@@ -43,7 +51,10 @@ DashboardWindow::DashboardWindow(QWidget *parent)
         addCardToList(card.question, card.answer, card.id);
     }
 
+    // Populate notes & cert features
+    updateCertificatesPage();
 }
+
 
 DashboardWindow::~DashboardWindow()
 {
@@ -59,9 +70,9 @@ void DashboardWindow::goToProductivityPage() {
     ui->homeStackedWidget->setCurrentIndex(1);
 }
 
-void DashboardWindow::subjectsButton_clicked(){
+void DashboardWindow::subjectsButton_clicked() {
     ui->homeStackedWidget->setCurrentIndex(2);
-
+    updateNotesSection();
 }
 
 void DashboardWindow::certificatesButton_clicked(){
@@ -69,15 +80,16 @@ void DashboardWindow::certificatesButton_clicked(){
 
 }
 
-
 void DashboardWindow::dashboardLogoutButton_clicked(){
     emit logoutSuccessful();       // Notify mainwindow.cpp
 }
+
+// Display most recent progress
 void DashboardWindow::subjectSelector_changed(const QString &subject)
 {
     qDebug() << "Subject changed to:" << subject;
 
-    int userId = 1; // TODO: replace with actual logged-in user ID
+    int userId = 1;
 
     QSqlQuery query;
     query.prepare(R"(
@@ -110,16 +122,16 @@ void DashboardWindow::subjectSelector_changed(const QString &subject)
     }
 }
 
-
+// Increase progress and trigger certificate creation
 void DashboardWindow::updateProgress()
 {
     QString subject = ui->subjectSelector->currentText();
     QString notes = ui->notesEdit->text();
     QDate date = ui->datePicker->date();
 
-    // For now, let's simulate a new progress value by increasing the existing value
+
     int oldValue = ui->prodProgressBar->value();
-    int newValue = qMin(oldValue + 10, 100); // example: increase by 10 each time
+    int newValue = qMin(oldValue + 10, 100); //increases percentage by 10 each time
 
     // Save to DB
     QSqlQuery query;
@@ -128,7 +140,7 @@ void DashboardWindow::updateProgress()
         VALUES (?, ?, ?, ?, ?)
     )");
 
-    query.addBindValue(1); // Replace with actual user ID
+    query.addBindValue(1);
     query.addBindValue(subject);
     query.addBindValue(newValue);
     query.addBindValue(notes);
@@ -149,11 +161,60 @@ void DashboardWindow::updateProgress()
 
         // Actually update the value (so it's stored for future logic)
         ui->prodProgressBar->setValue(newValue);
+
+
+        if (newValue == 100 && oldValue < 100) {
+            // Show popup congratulation message
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("🎉 You Did It!");
+            msgBox.setText("⭐ Congratulations! ⭐ \n\nYou've mastered this subject!\n ✨Keep up the amazing work✨");
+            msgBox.exec();
+
+            //Generate certificate if just reached 100%
+            QSqlQuery certQuery;
+            certQuery.prepare("INSERT INTO certificates (user_id, subject, date_generated) VALUES (?, ?, ?)");
+            certQuery.addBindValue(1);
+            certQuery.addBindValue(subject);
+            certQuery.addBindValue(QDate::currentDate().toString(Qt::ISODate));
+            certQuery.exec();
+            updateCertificatesPage();
+        }
+        updateNotesSection();
     }
 }
 
+// Loads saved notes grouped by subject (sorted by date)
+void DashboardWindow::updateNotesSection() {
+    ui->pastStudySessionNotes->clear();
 
+    QSqlQuery query;
+    query.prepare("SELECT subject, date, notes FROM progress WHERE user_id = 1 ORDER BY subject, date DESC");
+    if (!query.exec()) {
+        qDebug() << "Failed to load notes:" << query.lastError();
+        return;
+    }
 
+    while (query.next()) {
+        QString subject = query.value(0).toString();
+        QString date = query.value(1).toString();
+        QString notes = query.value(2).toString();
+        QString displayText = QString("[%1] %2\n%3").arg(subject, date, notes);
+        ui->pastStudySessionNotes->addItem(displayText);
+    }
+}
+
+// Displays certificate list
+void DashboardWindow::updateCertificatesPage() {
+    ui->certListWidget->clear();
+
+    QSqlQuery query("SELECT subject, date_generated FROM certificates WHERE user_id = 1");
+    while (query.next()) {
+        QString subject = query.value(0).toString();
+        QString date = query.value(1).toString();
+        QString itemText = QString("📜 %1 — %2").arg(subject, date);
+        ui->certListWidget->addItem(itemText);
+    }
+}
 
 void DashboardWindow::addCardButton_clicked()
 {
