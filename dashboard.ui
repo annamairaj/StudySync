@@ -10,6 +10,127 @@
     <height>900</height>
    </rect>
   </property>
+  <property name="styleSheet">
+   <string notr="true">#loginButton {
+	background-color: rgb(99, 76, 77); 
+	border-radius: 10px;
+	color: white;
+	height:  40px;
+	border: 1px solid #000000;
+}
+
+#sidebarFrame {
+ border-radius: 10px;
+ border: 1px solid #000000;
+}
+
+#topbarFrame {
+	background-color: none;
+	border: none;
+}
+
+#dashboardButton {
+    background-color: rgb(242, 242, 242);
+	border-radius: 10px;
+	color: black;
+	width: 120;
+	height: 40px;
+	border: 1px solid #000000;
+}
+#subjectsButton {
+    background-color: rgb(242, 242, 242);
+	border-radius: 10px;
+	color: black;
+	height: 40px;
+	border: 1px solid #000000;
+	width: 120
+}
+#certificatesButton {
+    background-color: rgb(242, 242, 242);
+	border-radius: 10px;
+	color: black;
+	height: 40px;
+	border: 1px solid #000000;
+	width: 120
+}
+
+#dashboardLogoutButton {
+	background-color: rgb(74, 84, 117);
+	border-radius: 10px;
+	color: white;
+	height: 40px;
+	border: 1px solid #000000;
+	width: 120
+}
+
+#searchLineEdit {
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+    color: #000000;
+    height: 40px;
+	border: 1px solid #000000;
+	padding-left: 10px;
+}
+
+#contentFrame {
+ border-radius: 10px;
+ border: 1px solid #000000;
+}
+
+#appTitle {
+ font-weight: bold;
+}
+
+#addCardButton {
+	background-color: rgb(242, 238, 235);
+	border-radius: 10px;
+	color: black;
+     font-weight: bold;
+ 	height: 40px;
+	border: 1px solid #000000;
+}
+#startQuizButton {
+	background-color: rgb(106, 85, 115); 
+	border-radius: 10px;
+	color: white;
+     font-weight: bold;
+ 	height: 40px;
+	border: 1px solid #000000;
+}
+
+
+#cardDeckScrollArea {
+	background-color: rgb(220, 216, 216);
+	border-radius: 10px;
+	border: 1px solid #000000;
+	padding: 10px
+}
+
+#cardScrollArea {
+	background-color:  rgb(220, 216, 216);
+	border-radius: 10px;
+	padding: 10px
+}
+
+#scrollAreaWidgetContents_2 {
+	background-color:  rgb(220, 216, 216);
+	border-radius: 10px;
+	padding: 10px
+}
+
+#cardContainer {
+	background-color:  rgb(220, 216, 216);
+	border-radius: 10px;
+	padding: 10px
+
+}
+
+#scrollAreaWidgetContents {
+	background-color:  rgb(220, 216, 216);
+	border-radius: 10px;
+	padding: 10px
+}</string>
+  </property>
   <layout class="QHBoxLayout" name="mainLayout">
    <item>
     <widget class="QFrame" name="sidebarFrame">
@@ -20,7 +141,7 @@
       <item>
        <widget class="QLabel" name="appTitle">
         <property name="text">
-         <string>StudySync</string>
+         <string>STUDYSYNC</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -35,16 +156,34 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="subjectsButton">
+       <widget class="QPushButton" name="certificatesButton">
         <property name="text">
-         <string>Subjects</string>
+         <string>Certificates</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="certificatesButton">
+       <widget class="QPushButton" name="productivityTrackerButton">
+        <property name="styleSheet">
+         <string notr="true">#productivityTrackerButton {
+    background-color: rgb(242, 242, 242);
+	border-radius: 10px;
+	color: black;
+	height: 40px;
+	border: 1px solid #000000;
+	width: 120;
+}
+</string>
+        </property>
         <property name="text">
-         <string>Certificates</string>
+         <string>Productivity Tracker</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="subjectsButton">
+        <property name="text">
+         <string>Study Journal</string>
         </property>
        </widget>
       </item>
@@ -64,6 +203,13 @@
         </property>
        </spacer>
       </item>
+      <item>
+       <widget class="QPushButton" name="dashboardLogoutButton">
+        <property name="text">
+         <string>Logout</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -73,50 +219,415 @@
       <enum>QFrame::Shape::StyledPanel</enum>
      </property>
      <layout class="QVBoxLayout" name="contentLayout">
+      <property name="topMargin">
+       <number>12</number>
+      </property>
       <item>
-       <widget class="QLabel" name="subjectLabel">
-        <property name="font">
-         <font>
-          <pointsize>12</pointsize>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Current Subject: Mathematics</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignmentFlag::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLCDNumber" name="studyTimer">
-        <property name="digitCount">
-         <number>8</number>
-        </property>
-        <property name="segmentStyle">
-         <enum>QLCDNumber::SegmentStyle::Flat</enum>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QProgressBar" name="progressBar">
-        <property name="value">
-         <number>40</number>
-        </property>
-        <property name="format">
-         <string>%p% Complete</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="downloadCertificateButton">
+       <widget class="QFrame" name="topbarFrame">
         <property name="enabled">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
-        <property name="text">
-         <string>Download Certificate</string>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>10</height>
+         </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Shape::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Shadow::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QLineEdit" name="searchLineEdit">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>300</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="placeholderText">
+            <string>Search</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Policy::Expanding</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QStackedWidget" name="homeStackedWidget">
+        <property name="styleSheet">
+         <string notr="true">#certificateLabel {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: rgb(74, 84, 117);
+}
+</string>
+        </property>
+        <property name="currentIndex">
+         <number>1</number>
+        </property>
+        <widget class="QWidget" name="dashboardPageStack">
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QPushButton" name="addCardButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Add Card</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="startQuizButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Start Quiz</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QScrollArea" name="cardDeckScrollArea">
+            <property name="widgetResizable">
+             <bool>true</bool>
+            </property>
+            <widget class="QWidget" name="scrollAreaWidgetContents">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>740</width>
+               <height>674</height>
+              </rect>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_3">
+              <item>
+               <widget class="QWidget" name="cardDeckContianer" native="true">
+                <layout class="QHBoxLayout" name="horizontalLayout_5">
+                 <item>
+                  <widget class="QScrollArea" name="cardScrollArea">
+                   <property name="widgetResizable">
+                    <bool>true</bool>
+                   </property>
+                   <widget class="QWidget" name="scrollAreaWidgetContents_2">
+                    <property name="geometry">
+                     <rect>
+                      <x>0</x>
+                      <y>0</y>
+                      <width>672</width>
+                      <height>606</height>
+                     </rect>
+                    </property>
+                    <layout class="QHBoxLayout" name="horizontalLayout_4">
+                     <item>
+                      <widget class="QWidget" name="cardContainer" native="true">
+                       <layout class="QVBoxLayout" name="verticalLayout">
+                        <item>
+                         <layout class="QHBoxLayout" name="horizontalLayout_6">
+                          <property name="rightMargin">
+                           <number>0</number>
+                          </property>
+                          <item>
+                           <layout class="QVBoxLayout" name="cardLayout"/>
+                          </item>
+                         </layout>
+                        </item>
+                       </layout>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="productivityPageStack">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">#productivityPageStack {
+    background-color: rgb(242, 238, 235);
+    border-radius: 10px;
+    padding: 20px;
+}</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_8">
+          <item>
+           <widget class="QLabel" name="productivityPageLabel">
+            <property name="minimumSize">
+             <size>
+              <width>762</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>50</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">#productivityPageLabel {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}</string>
+            </property>
+            <property name="text">
+             <string>Productivity Tracker</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QProgressBar" name="prodProgressBar">
+            <property name="maximumSize">
+             <size>
+              <width>400</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">#prodProgressBar {
+    height: 20px;
+    border-radius: 10px;
+    border: 1px solid #000;
+    text-align: center;
+    margin-top: 10px;
+    background-color: #f2f2f2;
+}</string>
+            </property>
+            <property name="value">
+             <number>24</number>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="subjectSelector">
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">#subjectSelector {
+    height: 35px;
+    border-radius: 8px;
+    border: 1px solid #000;
+    padding-left: 10px;
+    background-color: #ffffff;
+    font-size: 14px;
+}
+</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QDateEdit" name="datePicker">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>150</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">#datePicker {
+    height: 35px;
+    border-radius: 8px;
+    border: 1px solid #000;
+    padding-left: 10px;
+    background-color: #ffffff;
+    font-size: 14px;
+}
+</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="notesEdit">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>300</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">#notesEdit {
+    height: 35px;
+    border-radius: 8px;
+    border: 1px solid #000;
+    padding-left: 10px;
+    background-color: #ffffff;
+    font-size: 14px;
+}
+</string>
+            </property>
+            <property name="text">
+             <string>Notes</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="updateProgressButton">
+            <property name="maximumSize">
+             <size>
+              <width>400</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">#updateProgressButton {
+    height: 40px;
+    border-radius: 10px;
+    background-color: rgb(106, 85, 115); 
+    color: white;
+    font-weight: bold;
+    border: 1px solid #000000;
+}
+</string>
+            </property>
+            <property name="text">
+             <string>Update Progress</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="subjectsPageStack">
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QLabel" name="subjectsLabel">
+            <property name="styleSheet">
+             <string notr="true">#subjectsLabel {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: rgb(74, 84, 117);
+}
+</string>
+            </property>
+            <property name="text">
+             <string>Journal Entries by Subject</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QListWidget" name="pastStudySessionNotes">
+            <property name="styleSheet">
+             <string notr="true">#pastStudySessionNotes {
+    background-color: rgb(242, 238, 235);
+    border-radius: 10px;
+    border: 1px solid #000000;
+    padding: 10px;
+    font-size: 14px;
+    color: black;
+}
+QListWidget::item {
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+}
+QListWidget::item:selected {
+    background-color: rgb(106, 85, 115);
+    color: white;
+}
+</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="certsPageStack">
+         <layout class="QVBoxLayout" name="verticalLayout_5">
+          <item>
+           <widget class="QLabel" name="certificateLabel">
+            <property name="text">
+             <string>Your Certificates</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QListWidget" name="certListWidget">
+            <property name="styleSheet">
+             <string notr="true">#certListWidget {
+    background-color: rgb(242, 238, 235);
+    border-radius: 10px;
+    border: 1px solid #000000;
+    padding: 10px;
+    font-size: 14px;
+    color: black;
+}
+QListWidget::item {
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+}
+QListWidget::item:selected {
+    background-color: rgb(106, 85, 115);
+    color: white;
+}
+</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </widget>
       </item>
      </layout>
